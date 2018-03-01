@@ -4,14 +4,21 @@ require('sinatra/activerecord')
 also_reload('lib/**/*.rb')
 require('pry')
 require('pg')
-require('Recipe')
-require('Ingredient')
+require('./lib/recipe')
+require('./lib/ingredient')
+require('./lib/ingredients_recipes')
 
 
 get('/') do
-  erb:index
+  @recipes = Recipe.all
+  erb(:home)
 end
 
 post('/') do
-  erb:index
+  title = params.fetch("title")
+  rating = params.fetch("rating")
+  directions = params.fetch("directions")
+  @recipe = Recipe.create({:title => title, :rating => rating})
+  @recipes = Recipe.all()
+  erb(:home)
 end

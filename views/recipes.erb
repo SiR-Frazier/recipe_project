@@ -1,7 +1,10 @@
-<h2>Edit Recipe</h2>
+<h1>Edit <%= @recipe.title %> </h1>
 
-<div class="col-md-6">
-  <label for="rating"><h2>Recipe Rating: </h2></label>
+
+<p> <%= @recipe.rating %> </p>
+
+<form id="rating-form" action="/recipes/<%= @recipe.id %>" method="post">
+  <label for="rating"><h3>Recipe Rating: </h3></label>
   <select name="rating" class="form-control">
     <option value="nil">-select-</option>
     <option value="1">1</option>
@@ -11,19 +14,36 @@
     <option value="5">5</option>
   </select>
   <br>
-</div>
+  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
+  <br>
+</form>
 
-<div class="row">
-<label for="directions">Recipe Directions: </label>
-<input type="text" name="directions" class="form-control" placeholder="Enter Directions">
-<br>
+<% @ingredients.each do |ingredient| %>
+   <li> <%= ingredient.name %> </li>
+   <br>
+ <% end %>
+
+<form id="ingredients-form" action="/recipes/<%= @recipe.id %>" method="post">
+  <label for="ingredients"><h3>Ingredients: </h3></label>
+  <input type="text" name="ingredients" class="form-control" placeholder="Enter Ingredient">
+  <br>
+  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
+</form>
+  <br>
+
+  <%= @recipe.directions %>
+
+
+<form id="directions-form" action="/recipes/<%= @recipe.id %>" method="post">
+  <label for="directions"><h3>Recipe Directions: </h3></label>
+  <input type="text" name="directions" class="form-control" placeholder="Enter Directions">
+  <br>
+  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
+</form>
+  <br>
 
 <div id="home-butts">
-  <div class="row">
-    <div class="col-md-6">
-      <button type="button" class="btn btn-warning" id="recipe-butts">View Recipes</button>
-      <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
-    </div>
-  </div>
-</div>
+
+  <a href="/" class="btn btn-warning" id="recipe-butts">Home</a>
+
 </div>

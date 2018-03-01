@@ -36,14 +36,30 @@ get('/recipes/:id') do
   erb(:recipes)
 end
 
-patch('recipes/:id') do
+post('/recipes/:id') do
+  rating = params.fetch("rating")
+  directions = params.fetch("directions")
+  ingredients = params.fetch("ingredients")
+  Recipe.create({:title => title, :rating => rating, :directions => directions})
+  Ingredient.create(:name => ingredients)
+
+  @recipe = Recipe.find(params.fetch("id").to_i())
+
+  @rating = @recipe.rating
+  @ingredients = @ingredients.name
+  @directions = @recipe.directions
+  erb(:recipes)
+end
+
+patch('/recipes/:id') do
   title = params.fetch("title")
+  rating = params.fetch("rating")
   directions = params.fetch("directions")
   ingredients = params.fetch("ingredients")
   tags = params.fetch("tag")
   @recipe = Recipe.find(params.fetch("id").to_i())
   @tag = Tag.find(params.fetch("id").to_i)
-  @ingredients.Ingredient.find(params.fetch("id").to_i)
+  @ingredients = Ingredient.find(params.fetch("id").to_i)
 
   @recipe.update({:rating => rating, :directions => directions})
   @tag.update({:name => name})
@@ -52,7 +68,7 @@ patch('recipes/:id') do
   @title = @recipe.title
   @rating = @recipe.rating
   @ingredients = @ingredients.name
-  @instructions = @recipe.instructions
+  @directions = @recipe.directions
   @tags = @tag.name
   erb(:recipes)
 end

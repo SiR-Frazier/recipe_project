@@ -4,44 +4,61 @@ require('sinatra/activerecord')
 also_reload('lib/**/*.rb')
 require('pry')
 require('pg')
-require('./lib/recipe')
-require('./lib/ingredient')
+require('./lib/recipes')
+require('./lib/tags')
+require('./lib/ingredients')
 require('./lib/ingredients_recipes')
+require('./lib/recipes_tags')
 
 
 get('/') do
-  @recipes = Recipe.all
+  @recipe_list = Recipe.all()
   @tags = Tag.all
   @ingredients = Ingredient.all
   erb(:home)
 end
 
 post('/') do
-  recipe_name = params.fetch("title")
-
-  @recipe = Recipe.create({:title => title})
-  @recipes = Recipe.all()
+  title = fetch.params("title")
+  Recipe.create({:title => title, :id => nil})
+  @recipe_list = Recipe.all()
+  @tags = Tag.all
+  @ingredients = Ingredient.all
   erb(:home)
 end
 
 get('/recipes/:id') do
   @recipe = Recipe.find(params.fetch("id").to_i())
+  @ingredient = Ingredient.find(params.fetch("id").to_i)
+  @tag = Tag.find(params.fetch("id").to_i)
   rating = params.fetch("rating")
   directions = params.fetch("directions")
   ingredients = params.fetch("ingredients")
   tag = params.fetch("tag")
   @rating = @recipe.rating
   @directions = @recipe.directions
-  @ingredients = @recipe.ingredients
-  @tags = @recipe.tags
-  erb(:recipe_view)
+  @ingredients = @ingredient.ingredients
+  @tags = @tag.tags
+  erb(:recipes)
+end
 
 patch('recipes/:id') do
   title = params.fetch("title")
   directions = params.fetch("directions")
+  ingredients = params.fetch("ingredients")
+  tags = params.fetch("tag")
   @recipe = Recipe.find(params.fetch("id").to_i())
-  @recipe.update({:directions => directions})
-  @ingredients = @recipe.ingredients
-  @tags = @recipe.tags
-  erb(:recipe_edit)
+  @tag = Tag.find(params.fetch("id").to_i)
+  @ingredients.Ingredient.find(params.fetch("id").to_i)
+
+  @recipe.update({:rating => rating, :directions => directions})
+  @tag.update({:name => name})
+  @ingredients.update({:name => name})
+
+  @title = @recipe.title
+  @rating = @recipe.rating
+  @ingredients = @ingredients.name
+  @instructions = @recipe.instructions
+  @tags = @tag.name
+  erb(:recipes)
 end

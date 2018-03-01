@@ -1,4 +1,4 @@
-class CreateTables < ActiveRecord::Migration[5.1]
+class AddTables < ActiveRecord::Migration[5.1]
   def change
     create_table(:ingredients) do |t|
       t.column(:name, :string)
@@ -6,7 +6,6 @@ class CreateTables < ActiveRecord::Migration[5.1]
     end
     create_table(:recipes) do |t|
       t.column(:title, :string)
-      t.column(:ingredients, :string)
       t.column(:directions, :text)
       t.column(:rating, :string)
       t.timestamps

@@ -1,45 +1,26 @@
 <h1>Ressipeez</h1>
 
+
 <div class="recipe">
+
+  <% @recipe_list.each do |recipe| %>
+     <li>
+        <a href="/recipes/<%= recipe.id %>">
+          <%= recipe.title %>
+        </a>
+     </li>
+     <br>
+   <% end %>
+
   <form action="/" method="post">
     <div class="row">
-
-      <div class="col-md-6">
         <label for="title"><h2>Enter a New Recipe: </h2></label>
         <input name="title" type="text" class="form-control" placeholder="Enter New Recipe">
-
         <br>
-      </div>
-
-      <div class="col-md-6">
-        <label for="rating"><h2>Recipe Rating: </h2></label>
-        <select name="rating" class="form-control">
-          <option value="nil">-select-</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <br>
-      </div>
-
+        <button type="submit" name="button" class="btn btn-default">Add Recipe</button>
     </div>
 
-    <div class="row">
-      <label for="directions">Recipe Directions: </label>
-      <input type="text" name="directions" class="form-control" placeholder="Enter Directions">
-      <br>
 
-      <div id="home-butts">
-        <div class="row">
-          <div class="col-md-6">
-            <button type="button" class="btn btn-warning" id="recipe-butts">View Recipes</button>
-            <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </form>
 </div>
 

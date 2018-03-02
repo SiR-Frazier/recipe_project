@@ -1,49 +1,26 @@
 <h1>Edit <%= @recipe.title %> </h1>
 
-
-<p> <%= @recipe.rating %> </p>
-
-<form id="rating-form" action="/recipes/<%= @recipe.id %>" method="post">
-  <label for="rating"><h3>Recipe Rating: </h3></label>
-  <select name="rating" class="form-control">
-    <option value="nil">-select-</option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-  </select>
-  <br>
-  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
-  <br>
-</form>
-
-<% @ingredients.each do |ingredient| %>
-   <li> <%= ingredient.name %> </li>
-   <br>
+<h2>Ingredients: </h2>
+<ol>
+<% @ingredients_list.each do |i| %>
+   <li> <a href="/recipes/<%= i.id%>/edit-ingredient"><%= i.name %></a> </li>
  <% end %>
+</ol>
 
-<form id="ingredients-form" action="/recipes/<%= @recipe.id %>" method="post">
-  <label for="ingredients"><h3>Ingredients: </h3></label>
-  <input type="text" name="ingredients" class="form-control" placeholder="Enter Ingredient">
-  <br>
-  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
-</form>
-  <br>
+<a href="/recipes/<%= @recipe.id %>/edit-ingredient" class="btn btn-warning" id="recipe-butts">Add Ingredients</a>
 
-  <%= @recipe.directions %>
+<br>
 
+<h2>Directions</h2>
+<ol>
+<% @recipe_list.each do |d| %>
+   <li> <a href="/recipes/<%= d.id%>/edit-directions"><%= d.directions %></a> </li>
+ <% end %>
+</ol>
 
-<form id="directions-form" action="/recipes/<%= @recipe.id %>" method="post">
-  <label for="directions"><h3>Recipe Directions: </h3></label>
-  <input type="text" name="directions" class="form-control" placeholder="Enter Directions">
-  <br>
-  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
-</form>
-  <br>
+<br>
 
-<div id="home-butts">
+<a href="/recipes/<%= @recipe.directions %>/edit-directions" class="btn btn-primary" id="recipe-butts">Add Directions</a>
 
-  <a href="/" class="btn btn-warning" id="recipe-butts">Home</a>
-
-</div>
+<br><br>
+<a href="/" class="btn btn-danger" id="recipe-butts">Home</a>

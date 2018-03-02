@@ -1,0 +1,20 @@
+<h1>Edit <%= @recipe.title %> Ingredients </h1>
+
+<% @ingredients_list.each do |r| %>
+   <li> <a href="/recipes/<%= r.id%>/edit-ingredient"><%= r.name %></a> </li>
+   <br>
+<% end %>
+
+<form id="ingredients-form" action="/recipes/<%= @recipe.id %>/edit-ingredient" method="post">
+  <label for="ingredients"><h3>Add Ingredients: </h3></label>
+  <input type="text" name="ingredients" class="form-control" placeholder="Enter Ingredients">
+  <br>
+  <button type="submit" class="btn btn-danger" id="recipe-butts">Add</button>
+</form>
+  <br>
+
+<div id="home-butts">
+
+  <a href="/" class="btn btn-warning" id="recipe-butts">Home</a>
+
+</div>

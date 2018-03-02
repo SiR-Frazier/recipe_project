@@ -13,12 +13,29 @@
    <% end %>
 
   <form action="/" method="post">
-    <div class="row">
-        <label for="title"><h2>Enter a New Recipe: </h2></label>
-        <input name="title" type="text" class="form-control" placeholder="Enter New Recipe">
-        <br>
-        <button type="submit" name="button" class="btn btn-default">Add Recipe</button>
-    </div>
+    <label for="title"><h3>Enter a New Recipe: </h3></label>
+    <input name="title" type="text" class="form-control" placeholder="Enter New Recipe">
+    <br>
+
+    <label for="rating"><h3>Recipe Rating: </h3></label>
+    <select name="rating" class="form-control">
+      <option value="nil">-select-</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br>
+
+    <label for="directions"><h3>Recipe Directions: </h3></label>
+    <input type="text" name="directions" class="form-control" placeholder="Enter Directions">
+
+    <br>
+
+    <button type="submit" name="button" class="btn btn-default">Add Recipe</button>
+
+
 
 
   </form>

@@ -7,8 +7,6 @@ require('pg')
 require('./lib/recipes')
 require('./lib/tags')
 require('./lib/ingredients')
-require('./lib/ingredients_recipes')
-require('./lib/recipes_tags')
 
 
 get('/') do
@@ -20,40 +18,81 @@ end
 
 post('/') do
   title = params.fetch("title")
-  Recipe.create({:title => title})
+  rating = params.fetch("rating")
+  directions = params.fetch("directions")
+
+  Recipe.create({:title => title, :rating => rating, :directions => directions})
   @recipe_list = Recipe.all()
-  @tags = Tag.all
-  @ingredients = Ingredient.all
   erb(:home)
 end
 
 get('/recipes/:id') do
   @recipe = Recipe.find(params.fetch("id").to_i())
 
-  @ingredients = Ingredient.all
-  @tags = Tag.all
+
+  @title = @recipe.title
+  @directions = @recipe.directions
+
+  @ingredients_list = Ingredient.all
   @recipe_list = Recipe.all
   erb(:recipes)
 end
 
-post('/recipes/:id') do
-  rating = params.fetch("rating")
+patch('/recipes/:id') do
+
+  recipe_name = params.fetch("title")
   directions = params.fetch("directions")
-  ingredients = params.fetch("ingredients")
-  Recipe.create({:title => title, :rating => rating, :directions => directions})
-  Ingredient.create(:name => ingredients)
+  recipe_id = params.fetch("id").to_i
 
-  @recipe = Recipe.find(params.fetch("id").to_i())
-
-  @rating = @recipe.rating
-  @ingredients = @ingredients.name
+  @recipe = Recipe.find(recipe_id)
+  @recipe_name = @recipe.title
   @directions = @recipe.directions
+  @ingredients = Ingredient.find(params.fetch("id"))
+
+  @ingredient = @ingredients.name
+  Ingredient.update({:directions => directions})
+
+  @recipe_list = Recipe.all
+  @ingredients_list = Ingredient.all
+
   erb(:recipes)
 end
 
+get('/recipes/:id/edit-ingredient') do
+  @recipe = Recipe.find(params.fetch("id"))
+  @ingredients = params[:ingredients]
+  @ingredients_list = Ingredient.all
+  @recipe_list = Recipe.all
+  erb(:ingredients_edit)
+end
+
+post('/recipes/:id/edit-ingredient') do
+  @recipe = Recipe.find(params.fetch("id").to_i)
+  ingredient_name = params.fetch("ingredients")
+  Ingredient.create({:name => ingredient_name})
+  @ingredients_list = Ingredient.all
+  @recipe_list = Recipe.all
+
+  erb :ingredients_edit
+end
+
+get('/recipes/:id/edit-directions') do
+  @recipe = Recipe.find(params.fetch("id").to_i)
+  @directions = params.fetch("directions")
+  @recipe_list = Recipe.all
+  erb :directions_edit
+end
+
+post('/recipes/:id/edit-directions') do
+  @recipe = Recipe.find(params.fetch("id").to_i)
+  directions = params.fetch("directions")
+  Recipe.create({:directions => directions})
+  @recipe_list = Recipe.all
+  erb :directions_edit
+end
+
 patch('/recipes/:id') do
-  title = params.fetch("title")
-  rating = params.fetch("rating")
+  rating = params.fetch("rating").to_i
   directions = params.fetch("directions")
   ingredients = params.fetch("ingredients")
   tags = params.fetch("tag")
@@ -70,5 +109,5 @@ patch('/recipes/:id') do
   @ingredients = @ingredients.name
   @directions = @recipe.directions
   @tags = @tag.name
-  erb(:recipes)
+  redirect("/recipes/#{@recipe.id.to_s}")
 end
